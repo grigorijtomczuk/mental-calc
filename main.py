@@ -28,70 +28,34 @@ def generate_random_problem() -> Problem:
 	return Problem(operator, x, y)
 
 
-def generateProblem() -> dict:
-	ops = {"+": lambda x, y: x + y, "-": lambda x, y: x - y}
-	op_key: str = choice(list(ops))
-	op: function = ops[op_key]
-	x = randint(1, 100)
-	y = randint(1, 100)
-	answer = op(x, y)
-	problem = {"x": x, "y": y, "op_key": op_key, "answer": answer}
-	return problem
+def main():
+	print("Welcome to Mental Math Calculations!")
 
-
-def isProblemSolved() -> bool:
-	problem = generateProblem()
-	op_key = problem["op_key"]
-	x = problem["x"]
-	y = problem["y"]
-	answer = problem["answer"]
 	while True:
 		try:
-			user_try = int(input(f"{x} {op_key} {y} = "))
+			problem_amount = int(input("How many problems do you want to solve?: "))
 			break
 		except ValueError:
-			print("Please, enter a valid number. Try again.")
-	if answer == user_try:
-		return True
-	else:
-		return False
+			print("Please, enter a valid number.")
+	
+	correct_answer_cnt = 0
+	start_time_seconds = time()
+	
+	for _ in range(problem_amount):
+		problem = generate_random_problem()
+		print(problem)
+		user_attempt = int(input("Answer: "))
+		if user_attempt == problem.solution:
+			print("Solved successfully!")
+			correct_answer_cnt += 1
+		else:
+			print("Wrong answer.")
+	
+	end_time_seconds = time()
+	result_time_seconds = end_time_seconds - start_time_seconds
+	completeness_percentage = (correct_answer_cnt / problem_amount) * 100
 
-
-def getSummary(results: dict) -> None:
-	correctAnswerCnt = results["corr_cnt"]
-	difficulty = results["diff"]
-	timeStart = results["t_start"]
-	timeEnd = results["t_end"]
-	completePercentage = (correctAnswerCnt / difficulty) * 100
-	print(f"Solved correctly {correctAnswerCnt} out of {difficulty} ({completePercentage:0.1f}%) in {timeEnd - timeStart:0.1f}s.")
-	if completePercentage >= 80:
-		print("Keep it up!")
-	else:
-		print("Consider trying once more!")
-
-
-def main():
-	problem = generate_random_problem()
-	print(problem)
-
-	# print("Welcome to Mental Math Calculations!")
-	# while True:
-	# 	try:
-	# 		difficulty = int(input("How many problems do you want to solve? ... "))
-	# 		break
-	# 	except ValueError:
-	# 		print("Please, enter a valid number. Try again.")
-	# correctAnswerCnt = 0
-	# timeStart = time()
-	# for _ in range(difficulty):
-	# 	if isProblemSolved():
-	# 		correctAnswerCnt += 1
-	# 		print("Solved successfully!")
-	# 	else:
-	# 		print("Wrong answer.")
-	# timeEnd = time()
-	# results = {"corr_cnt": correctAnswerCnt, "diff": difficulty, "t_start": timeStart, "t_end": timeEnd}
-	# getSummary(results)
+	print(f"Solved correctly {correct_answer_cnt} out of {problem_amount} ({completeness_percentage:.1f}%) in {result_time_seconds:.1f}s.")
 
 
 if __name__ == "__main__":
