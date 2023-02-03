@@ -10,9 +10,9 @@
 
 There are four elementary arithmetic operations you can train with Mental Math Calculations: `addition`, `subtraction`, `multiplication` and `division` (for now it's just integer division).
 
-The code block below is an example of how you can basically use the applicaton in your terminal.
+The code block below is an example of how you can basically use the applicaton in your terminal:
 
-```console
+```
 $ python3 main.py
 Welcome to Mental Math Calculations!
 How many problems do you want to solve?: {USER_INPUT} -> 3
