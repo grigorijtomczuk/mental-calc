@@ -1,5 +1,31 @@
+from operator import add, sub, mul, truediv
 from random import randint, choice
 from time import time
+
+
+class Problem():
+	
+	def __init__(self, operator: str, x: int, y: int):
+		self.operator = operator
+		self.x = x
+		self.y = y
+		operator_map = {
+			"+": add,
+			"-": sub,
+			"*": mul,
+			"/": truediv,  # float solution will be casted to int (temporarily)
+		}
+		self.solution = int(operator_map[self.operator](x, y))
+	
+	def __str__(self):
+		return f"{self.x} {self.operator} {self.y}"
+
+
+def generate_random_problem() -> Problem:
+	operator = choice(["+", "-", "*", "/"])
+	x = randint(1, 100)
+	y = randint(1, 100)
+	return Problem(operator, x, y)
 
 
 def generateProblem() -> dict:
@@ -45,24 +71,27 @@ def getSummary(results: dict) -> None:
 
 
 def main():
-	print("Welcome to Mental Math Calculations!")
-	while True:
-		try:
-			difficulty = int(input("How many problems do you want to solve? ... "))
-			break
-		except ValueError:
-			print("Please, enter a valid number. Try again.")
-	correctAnswerCnt = 0
-	timeStart = time()
-	for _ in range(difficulty):
-		if isProblemSolved():
-			correctAnswerCnt += 1
-			print("Solved successfully!")
-		else:
-			print("Wrong answer.")
-	timeEnd = time()
-	results = {"corr_cnt": correctAnswerCnt, "diff": difficulty, "t_start": timeStart, "t_end": timeEnd}
-	getSummary(results)
+	problem = generate_random_problem()
+	print(problem)
+
+	# print("Welcome to Mental Math Calculations!")
+	# while True:
+	# 	try:
+	# 		difficulty = int(input("How many problems do you want to solve? ... "))
+	# 		break
+	# 	except ValueError:
+	# 		print("Please, enter a valid number. Try again.")
+	# correctAnswerCnt = 0
+	# timeStart = time()
+	# for _ in range(difficulty):
+	# 	if isProblemSolved():
+	# 		correctAnswerCnt += 1
+	# 		print("Solved successfully!")
+	# 	else:
+	# 		print("Wrong answer.")
+	# timeEnd = time()
+	# results = {"corr_cnt": correctAnswerCnt, "diff": difficulty, "t_start": timeStart, "t_end": timeEnd}
+	# getSummary(results)
 
 
 if __name__ == "__main__":
