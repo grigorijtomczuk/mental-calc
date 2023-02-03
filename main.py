@@ -1,5 +1,5 @@
 from random import randint, choice
-from time import perf_counter
+from time import time
 
 
 def generateProblem() -> dict:
@@ -53,14 +53,14 @@ def main():
 		except ValueError:
 			print("Please, enter a valid number. Try again.")
 	correctAnswerCnt = 0
-	timeStart = perf_counter()
+	timeStart = time()
 	for _ in range(difficulty):
 		if isProblemSolved():
 			correctAnswerCnt += 1
 			print("Solved successfully!")
 		else:
 			print("Wrong answer.")
-	timeEnd = perf_counter()
+	timeEnd = time()
 	results = {"corr_cnt": correctAnswerCnt, "diff": difficulty, "t_start": timeStart, "t_end": timeEnd}
 	getSummary(results)
 
