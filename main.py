@@ -18,7 +18,7 @@ class Problem():
 		self.solution = int(operator_map[self.operator](x, y))
 	
 	def __str__(self):
-		return f"{self.x} {self.operator} {self.y}"
+		return f"\n{self.x} {self.operator} {self.y}"
 
 
 def generate_random_problem() -> Problem:
@@ -36,7 +36,7 @@ def main():
 			problem_amount = int(input("How many problems do you want to solve?: "))
 			break
 		except ValueError:
-			print("Please, enter a valid number.")
+			print("\nPlease, enter a valid number.")
 	
 	correct_answer_cnt = 0
 	start_time_seconds = time()
@@ -44,7 +44,14 @@ def main():
 	for _ in range(problem_amount):
 		problem = generate_random_problem()
 		print(problem)
-		user_attempt = int(input("Answer: "))
+
+		while True:
+			try:
+				user_attempt = int(input("Answer: "))
+				break
+			except ValueError:
+				print("\nPlease, enter a valid number.")
+		
 		if user_attempt == problem.solution:
 			print("Solved successfully!")
 			correct_answer_cnt += 1
@@ -55,7 +62,7 @@ def main():
 	result_time_seconds = end_time_seconds - start_time_seconds
 	completeness_percentage = (correct_answer_cnt / problem_amount) * 100
 
-	print(f"Solved correctly {correct_answer_cnt} out of {problem_amount} ({completeness_percentage:.1f}%) in {result_time_seconds:.1f}s.")
+	print(f"\nSolved correctly {correct_answer_cnt} out of {problem_amount} ({completeness_percentage:.1f}%) in {result_time_seconds:.1f}s.")
 
 
 if __name__ == "__main__":
